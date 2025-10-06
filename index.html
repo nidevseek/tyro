@@ -190,7 +190,9 @@ const popupUsername = document.getElementById('popup-username');
 async function loadUser() {
   try {
     // Получаем текущего пользователя с сервера
-    const res = await fetch('https://e2.aurorix.net:25101/api/me', { credentials: 'include' });
+const res = await fetch('https://e2.aurorix.net:25438/api/me', {
+  credentials: 'include'
+});
     const user = await res.json();
     if (!user.id) return; // если не залогинен, ничего не делаем
 
