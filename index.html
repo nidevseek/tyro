@@ -229,11 +229,9 @@ if (userCookie) {
   } catch (err) {
     console.error('Failed to parse discord_user cookie:', err);
   }
-}
-
 async function updateStats() {
   try {
-    const res = await fetch('https://corsproxy.io/?http://e2.aurorix.net:25101/api/stats');
+    const res = await fetch('https://e2.aurorix.net:25101/stats'); // HTTPS на твоём сервере
     const data = await res.json();
 
     document.getElementById('servers-count').textContent = data.servers || 0;
