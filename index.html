@@ -189,10 +189,10 @@ const popupUsername = document.getElementById('popup-username');
 
 async function loadUser() {
   try {
-    // Получаем текущего пользователя с сервера
-const res = await fetch('https://e2.aurorix.net:25438/api/me', {
-  credentials: 'include'
-});
+      // Получаем текущего пользователя с сервера
+    const res = await fetch('https://e2.aurorix.net:25438/api/me', {
+      credentials: 'include'
+    });
     const user = await res.json();
     if (!user.id) return; // если не залогинен, ничего не делаем
 
@@ -203,7 +203,12 @@ const res = await fetch('https://e2.aurorix.net:25438/api/me', {
       ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
       : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
 
-    avatarContainer.innerHTML = `<img src="${avatarUrl}" style="cursor:pointer; border-radius:50%; width:40px; height:40px;">`;
+    if (user.avatar) {
+      avatarContainer.innerHTML = `<img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128" style="cursor:pointer;">`;
+    } else {
+      avatarContainer.innerHTML = `<img src="https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png" style="cursor:pointer;">`;
+    }
+
     popupUsername.textContent = `${user.username}`;
 
     // открытие/закрытие попапа по клику на аватар
