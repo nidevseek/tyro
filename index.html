@@ -186,22 +186,13 @@ const logoutBtn = document.getElementById('logout-btn');
 const avatarContainer = document.getElementById('user-avatar-container');
 const popup = document.getElementById('user-profile-popup');
 const popupUsername = document.getElementById('popup-username');
-const popupId = document.getElementById('popup-id');
 
-function base64urlDecode(str) {
-  str = str.replace(/-/g, '+').replace(/_/g, '/');
-  while (str.length % 4) str += '=';
-  return atob(str);
-}
-
-const userCookie = document.cookie
-  .split('; ')
-  .find(row => row.startsWith('discord_user='))
-  ?.split('=')[1];
-
-if (userCookie) {
+async function loadUser() {
   try {
-    const user = JSON.parse(base64urlDecode(userCookie));
+    // Получаем текущего пользователя с сервера
+    const res = await fetch('https://e2.aurorix.net:25101/api/me', { credentials: 'include' });
+    const user = await res.json();
+    if (!user.id) return; // если не залогинен, ничего не делаем
 
     loginBtn.style.display = 'none';
     logoutBtn.style.display = 'inline-block';
@@ -210,9 +201,10 @@ if (userCookie) {
       ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
       : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
 
-    avatarContainer.innerHTML = `<img src="${avatarUrl}" cursor:pointer;">`;
+    avatarContainer.innerHTML = `<img src="${avatarUrl}" style="cursor:pointer; border-radius:50%; width:40px; height:40px;">`;
     popupUsername.textContent = `${user.username}`;
 
+    // открытие/закрытие попапа по клику на аватар
     avatarContainer.querySelector('img').addEventListener('click', () => {
       popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
     });
@@ -223,22 +215,24 @@ if (userCookie) {
       }
     });
 
-    logoutBtn.addEventListener('click', (e) => {
+    logoutBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      document.cookie = "discord_user=; Max-Age=0; path=/";
+      await fetch('https://e2.aurorix.net:25101/logout', { method: 'POST', credentials: 'include' });
       location.reload();
     });
 
   } catch (err) {
-    console.error('Failed to parse discord_user cookie:', err);
+    console.error('Ошибка при загрузке пользователя:', err);
   }
 }
 
+loadUser();
+
+// Обновление статистики
 async function updateStats() {
   try {
-    const res = await fetch('https://e2.aurorix.net:25101/api/stats'); // HTTPS на твоём сервере
+    const res = await fetch('https://e2.aurorix.net:25101/api/stats');
     const data = await res.json();
-
     document.getElementById('servers-count').textContent = data.servers || 0;
     document.getElementById('users-count').textContent = data.users || 0;
     document.getElementById('logs-count').textContent = data.logs || 0;
@@ -251,6 +245,7 @@ async function updateStats() {
 updateStats();
 setInterval(updateStats, 30000);
 </script>
+
 
 </body>
 </html>
