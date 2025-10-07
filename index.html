@@ -294,10 +294,10 @@
   </div>
 </section>
 
-  <div id="username"></div>
-<img id="avatar" />
 
-  <div id="user-json" style="margin: 20px; padding: 10px; background: #1b1b1b; color: #f0f0f0; border-radius: 15px; overflow-x: auto;"></div>
+  <div id="user-json" style="margin: 20px; padding: 10px; background: #1b1b1b; color: #f0f0f0; border-radius: 15px; overflow-x: auto;">
+    <img id="avatar" alt="User Avatar" />
+  </div>
 
 <section class="section" id="audit">
   <h2>Система аудита</h2>
@@ -397,12 +397,22 @@ function getUserFromUrl() {
 
 const user = getUserFromUrl();
 if (user) {
+  // Вывод JSON
   document.getElementById('user-json').innerHTML = `<pre>${JSON.stringify(user, null, 2)}</pre>`;
-  // Пример для аватара
+
+  // Показ аватара
   if (user.avatar) {
     const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-    document.getElementById('avatar').src = avatarUrl;
+    const avatarImg = document.getElementById('avatar');
+    avatarImg.src = avatarUrl;
+    avatarImg.style.width = '100px';
+    avatarImg.style.height = '100px';
+    avatarImg.style.borderRadius = '50%';
   }
+
+  // Можно скрыть кнопку "Войти", если уже авторизован
+  const loginBtn = document.getElementById('login-btn');
+  if (loginBtn) loginBtn.style.display = 'none';
 }
 
   
