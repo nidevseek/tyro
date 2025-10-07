@@ -389,12 +389,11 @@ const popupUsername = document.getElementById('popup-username');
 
 async function loadUser() {
   try {
-      // Получаем текущего пользователя с сервера
     const res = await fetch('https://e2.aurorix.net:25438/api/me', {
       credentials: 'include'
     });
     const user = await res.json();
-    if (!user.id) return; // если не залогинен, ничего не делаем
+    if (!user.id) return;
 
     loginBtn.style.display = 'none';
     logoutBtn.style.display = 'inline-block';
@@ -403,17 +402,12 @@ async function loadUser() {
       ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
       : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
 
-    if (user.avatar) {
-      avatarContainer.innerHTML = `<img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128" style="cursor:pointer;">`;
-    } else {
-      avatarContainer.innerHTML = `<img src="https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png" style="cursor:pointer;">`;
-    }
+    avatarContainer.innerHTML = `<img src="${avatarUrl}" style="cursor:pointer;">`;
+    popupUsername.textContent = user.username;
 
-    popupUsername.textContent = `${user.username}`;
-
-    // открытие/закрытие попапа по клику на аватар
     avatarContainer.querySelector('img').addEventListener('click', () => {
-      popup.style.display = popup.style.display === 'none' ? 'block' : 'none';
+      const isVisible = window.getComputedStyle(popup).display !== 'none';
+      popup.style.display = isVisible ? 'none' : 'block';
     });
 
     document.addEventListener('click', (e) => {
@@ -424,7 +418,10 @@ async function loadUser() {
 
     logoutBtn.addEventListener('click', async (e) => {
       e.preventDefault();
-      await fetch('https://e2.aurorix.net:25101/logout', { method: 'POST', credentials: 'include' });
+      await fetch('https://e2.aurorix.net:25438/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
       location.reload();
     });
 
