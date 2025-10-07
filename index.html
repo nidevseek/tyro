@@ -389,52 +389,10 @@ const avatarContainer = document.getElementById('user-avatar-container');
 const popup = document.getElementById('user-profile-popup');
 const popupUsername = document.getElementById('popup-username');
 
+const res = await fetch('https://e2.aurorix.net:25438/api/me', { credentials: 'include' });
+const user = await res.json();
+document.getElementById('user-json').innerHTML = `<pre>${JSON.stringify(user, null, 2)}</pre>`;
 
-  async function loadUser() {
-  try {
-    const res = await fetch('https://e2.aurorix.net:25438/api/me', {
-      credentials: 'include'
-    });
-    const user = await res.json();
-    if (!user.id) return;
-
-    loginBtn.style.display = 'none';
-    logoutBtn.style.display = 'inline-block';
-
-    const avatarUrl = user.avatar
-      ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
-      : `https://cdn.discordapp.com/embed/avatars/${user.discriminator % 5}.png`;
-
-    avatarContainer.innerHTML = `<img src="${avatarUrl}" style="cursor:pointer;">`;
-    popupUsername.textContent = user.username;
-
-    // Показываем JSON
-    document.getElementById('user-json').innerHTML = `<pre>${JSON.stringify(user, null, 2)}</pre>`;
-
-    avatarContainer.querySelector('img').addEventListener('click', () => {
-      const isVisible = window.getComputedStyle(popup).display !== 'none';
-      popup.style.display = isVisible ? 'none' : 'block';
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!avatarContainer.contains(e.target) && !popup.contains(e.target)) {
-        popup.style.display = 'none';
-      }
-    });
-
-    logoutBtn.addEventListener('click', async (e) => {
-      e.preventDefault();
-      await fetch('https://e2.aurorix.net:25438/logout', {
-        method: 'POST',
-        credentials: 'include'
-      });
-      location.reload();
-    });
-
-  } catch (err) {
-    console.error('Ошибка при загрузке пользователя:', err);
-  }
-}
 
 // Обновление статистики
 async function updateStats() {
