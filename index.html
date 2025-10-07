@@ -383,38 +383,48 @@
 </section>
 
 <script>
-function getUserFromUrl() {
+function getUserFromURL() {
   const params = new URLSearchParams(window.location.search);
-  const userParam = params.get('user');
-  if (!userParam) return null;
-
+  const userStr = params.get('user');
+  if (!userStr) return null;
   try {
-    return JSON.parse(decodeURIComponent(userParam));
+    return JSON.parse(decodeURIComponent(userStr));
   } catch {
     return null;
   }
 }
 
-const user = getUserFromUrl();
+// Сохраняем в localStorage
+const user = getUserFromURL();
 if (user) {
-  // Вывод JSON
-  document.getElementById('user-json').innerHTML = `<pre>${JSON.stringify(user, null, 2)}</pre>`;
-
-  // Показ аватара
-  if (user.avatar) {
-    const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-    const avatarImg = document.getElementById('avatar');
-    avatarImg.src = avatarUrl;
-    avatarImg.style.width = '100px';
-    avatarImg.style.height = '100px';
-    avatarImg.style.borderRadius = '50%';
-  }
-
-  // Можно скрыть кнопку "Войти", если уже авторизован
-  const loginBtn = document.getElementById('login-btn');
-  if (loginBtn) loginBtn.style.display = 'none';
+  localStorage.setItem('discord_user', JSON.stringify(user));
+  // Убираем параметры из URL, чтобы не светились
+  history.replaceState(null, '', window.location.pathname);
 }
 
+// Загружаем профиль из localStorage
+function loadUser() {
+  const userData = localStorage.getItem('discord_user');
+  if (!userData) return;
+
+  const u = JSON.parse(userData);
+  document.getElementById('user-json').innerHTML = `<pre>${JSON.stringify(u, null, 2)}</pre>`;
+
+  const avatarEl = document.getElementById('avatar');
+  avatarEl.src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=128`;
+  avatarEl.style.display = 'block';
+
+  document.getElementById('popup-username').textContent = u.username;
+  document.getElementById('logout-btn').style.display = 'inline-block';
+}
+
+loadUser();
+
+// Логаут
+document.getElementById('logout-btn').onclick = () => {
+  localStorage.removeItem('discord_user');
+  location.reload();
+};
   
 // Обновление статистики
 async function updateStats() {
