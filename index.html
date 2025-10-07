@@ -383,31 +383,28 @@
 </section>
 
 <script>
-function loadUserFromURL() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const userData = urlParams.get('user');
-  if (!userData) return;
+function getUserFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const userParam = params.get('user');
+  if (!userParam) return null;
 
-  const user = JSON.parse(decodeURIComponent(userData));
-  localStorage.setItem('discord_user', JSON.stringify(user));
-  window.history.replaceState({}, document.title, "/"); // убираем ?user=...
+  try {
+    return JSON.parse(decodeURIComponent(userParam));
+  } catch {
+    return null;
+  }
 }
 
-function getUser() {
-  const user = localStorage.getItem('discord_user');
-  return user ? JSON.parse(user) : null;
-}
-
-// При загрузке
-loadUserFromURL();
-
-const user = getUser();
+const user = getUserFromUrl();
 if (user) {
   document.getElementById('user-json').innerHTML = `<pre>${JSON.stringify(user, null, 2)}</pre>`;
-  document.getElementById('popup-username').textContent = user.username;
-} else {
-  document.getElementById('user-json').textContent = 'Пользователь не авторизован';
+  // Пример для аватара
+  if (user.avatar) {
+    const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+    document.getElementById('avatar').src = avatarUrl;
+  }
 }
+
   
 // Обновление статистики
 async function updateStats() {
