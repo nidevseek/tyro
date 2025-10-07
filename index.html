@@ -297,6 +297,8 @@
   <div id="username"></div>
 <img id="avatar" />
 
+  <div id="user-json" style="margin: 20px; padding: 10px; background: #1b1b1b; color: #f0f0f0; border-radius: 15px; overflow-x: auto;"></div>
+
 <section class="section" id="audit">
   <h2>Система аудита</h2>
   <div class="cards">
@@ -387,7 +389,8 @@ const avatarContainer = document.getElementById('user-avatar-container');
 const popup = document.getElementById('user-profile-popup');
 const popupUsername = document.getElementById('popup-username');
 
-async function loadUser() {
+
+  async function loadUser() {
   try {
     const res = await fetch('https://e2.aurorix.net:25438/api/me', {
       credentials: 'include'
@@ -404,6 +407,9 @@ async function loadUser() {
 
     avatarContainer.innerHTML = `<img src="${avatarUrl}" style="cursor:pointer;">`;
     popupUsername.textContent = user.username;
+
+    // Показываем JSON
+    document.getElementById('user-json').innerHTML = `<pre>${JSON.stringify(user, null, 2)}</pre>`;
 
     avatarContainer.querySelector('img').addEventListener('click', () => {
       const isVisible = window.getComputedStyle(popup).display !== 'none';
@@ -429,8 +435,6 @@ async function loadUser() {
     console.error('Ошибка при загрузке пользователя:', err);
   }
 }
-
-loadUser();
 
 // Обновление статистики
 async function updateStats() {
