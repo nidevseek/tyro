@@ -373,49 +373,7 @@
 </section>
 
 <script>
-function getUserFromURL() {
-  const params = new URLSearchParams(window.location.search);
-  const userStr = params.get('user');
-  if (!userStr) return null;
-  try {
-    return JSON.parse(decodeURIComponent(userStr));
-  } catch {
-    return null;
-  }
-}
 
-// Сохраняем в localStorage
-const user = getUserFromURL();
-if (user) {
-  localStorage.setItem('discord_user', JSON.stringify(user));
-  // Убираем параметры из URL, чтобы не светились
-  history.replaceState(null, '', window.location.pathname);
-}
-
-// Загружаем профиль из localStorage
-function loadUser() {
-  const userData = localStorage.getItem('discord_user');
-  if (!userData) return;
-
-  const u = JSON.parse(userData);
-  document.getElementById('user-json').innerHTML = `<pre>${JSON.stringify(u, null, 2)}</pre>`;
-
-  const avatarEl = document.getElementById('avatar');
-  avatarEl.src = `https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=128`;
-  avatarEl.style.display = 'block';
-
-  document.getElementById('popup-username').textContent = u.username;
-  document.getElementById('logout-btn').style.display = 'inline-block';
-}
-
-loadUser();
-
-// Логаут
-document.getElementById('logout-btn').onclick = () => {
-  localStorage.removeItem('discord_user');
-  location.reload();
-};
-  
 // Обновление статистики
 async function updateStats() {
   try {
