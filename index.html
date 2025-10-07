@@ -406,6 +406,15 @@ async function loadUser() {
 }
 
 loadUser();
+
+  fetch('https://e2.aurorix.net:25438/api/me', {
+  method: 'GET',
+  credentials: 'include'
+})
+.then(res => res.json())
+.then(data => console.log(data))
+.catch(err => console.error(err));
+  
 // Обновление статистики
 async function updateStats() {
   try {
