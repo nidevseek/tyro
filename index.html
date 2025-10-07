@@ -391,8 +391,8 @@ const popupUsername = document.getElementById('popup-username');
   
 async function loadUser() {
   try {
-    const res = await fetch('https://e2.aurorix.net:25438/api/me', { 
-      credentials: 'include'  // чтобы отправлялась кука
+    const res = await fetch('https://e2.aurorix.net:25438/api/me', {
+      credentials: 'include'
     });
     const user = await res.json();
     if (!user.id) {
