@@ -390,9 +390,19 @@ const popup = document.getElementById('user-profile-popup');
 const popupUsername = document.getElementById('popup-username');
   
 async function loadUser() {
-  const res = await fetch('https://e2.aurorix.net:25438/api/me', { credentials: 'include' });
-  const user = await res.json();
-  document.getElementById('user-json').innerHTML = `<pre>${JSON.stringify(user, null, 2)}</pre>`;
+  try {
+    const res = await fetch('https://e2.aurorix.net:25438/api/me', { 
+      credentials: 'include'  // чтобы отправлялась кука
+    });
+    const user = await res.json();
+    if (!user.id) {
+      document.getElementById('user-json').innerHTML = 'Пользователь не авторизован';
+      return;
+    }
+    document.getElementById('user-json').innerHTML = `<pre>${JSON.stringify(user, null, 2)}</pre>`;
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 loadUser();
