@@ -337,7 +337,7 @@
 <script>
 async function updateStats() {
   try {
-    const res = await fetch('https://ua1.sraki.ovh:15007/api/stats');
+    const res = await fetch('https://de1.code.sraki.ovh:5000/api/stats');
     const data = await res.json();
     document.getElementById('servers-count').textContent = data.servers || 0;
     document.getElementById('users-count').textContent = data.users || 0;
