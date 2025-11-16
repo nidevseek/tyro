@@ -1,358 +1,443 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Tyro - Discord Bot Logs</title>
-<meta property="og:type" content="website">
-<meta property="og:title" content="Tyro — Discord Bot Logs">
-<meta property="og:description" content="Дополните встроенную систему аудита Discord и следите за всеми событиями на сервере: удаление и изменение сообщений, вход и выход из голосовых каналов, изменение ролей и многое другое.">
-<meta property="og:image" content="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true">
-<meta property="og:image:width" content="512">
-<meta property="og:image:height" content="512">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Tyro — Discord Bot Logs">
-<meta name="twitter:description" content="Дополните встроенную систему аудита Discord и следите за всеми событиями на сервере: удаление и изменение сообщений, вход и выход из голосовых каналов, изменение ролей и многое другое.">
-<meta name="twitter:image" content="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true">
+<head><script type="text/javascript" src="/___vscode_livepreview_injected_script"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Tyro - Discord Bot Logs</title>
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Tyro — Discord Bot Logs" />
+  <meta property="og:description" content="Дополните встроенную систему аудита Discord и следите за всеми событиями на сервере: удаление и изменение сообщений, вход и выход из голосовых каналов, изменение ролей и многое другое." />
+  <meta property="og:image" content="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Tyro — Discord Bot Logs" />
+  <meta name="twitter:description" content="Дополните встроенную систему аудита Discord и следите за всеми событиями на сервере: удаление и изменение сообщений, вход и выход из голосовых каналов, изменение ролей и многое другое." />
+  <meta name="twitter:image" content="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true" />
 
-<link rel="icon" type="image/png" href="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png" href="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Stack+Sans+Notch:wght@200..700&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 
-  <style>
+<style>
   :root {
-    --main-bg: #0f0f0f;
-    --accent-color: #ff8967;
-    --text-color: #f0f0f0;
-    --hover-color: rgba(240, 240, 240, 0.1);
-    --card-bg: #1b1b1b;
-    --card-hover: #262626;
+    --main-bg: #0a0a0a;
+    --card-bg: #1a1a1a;
+    --card-hover: #252525;
+    --accent: #fe983e;
+    --accent-hover: #e8842a;
+    --text: #f0f0f0;
+    --text-muted: #aaaaaa;
+    --blur: 10px;
     --border-radius: 20px;
+    --transition: all 0.3s ease;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; }
-  body { background: var(--main-bg); color: var(--text-color); line-height: 1.6; }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Unbounded', sans-serif;
+  }
+
+  body {
+    background: var(--main-bg);
+    color: var(--text);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
 
   header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 16px 50px;
+    background: rgba(18, 18, 18, 0.7);
+    backdrop-filter: blur(var(--blur));
+    -webkit-backdrop-filter: blur(var(--blur));
+    border-bottom: 2px solid rgb(255, 119, 0);
+  }
+
+  .header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px 50px;
-    background: var(--card-bg);
-    border-bottom: 2px solid var(--accent-color);
+    max-width: 1400px;
+    margin: 0 auto;
   }
 
-  header img { width: 50px; border-radius: 50%; }
+  .logo img {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 15px rgba(254, 152, 62, 0.5);
+  }
 
-  header nav {
+
+  /* Десктопное меню */
+  .nav-desktop {
     display: flex;
-    align-items: center;
-    gap: 15px;
+    gap: 12px;
   }
 
-  header nav a {
+  .nav-desktop a {
+    color: var(--text);
     text-decoration: none;
-    color: var(--text-color);
     font-weight: 600;
-    padding: 8px 16px;
-    border-radius: var(--border-radius);
-    transition: background 0.3s;
+    font-size: 15px;
+    padding: 14px 18px;
+    border-radius: 12px;
+    transition: var(--transition);
+    position: relative;
   }
 
-  header nav a:hover { background: var(--hover-color); }
+  .nav-desktop a:hover {
+    color: var(--accent);
+  }
 
-  .hero {
+
+  .mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 10px;
+    transition: var(--transition);
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.711);
+    backdrop-filter: blur(20px);
+    transform: translateY(-100%);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    z-index: 999;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 100px 20px;
+    gap: 20px;
+    padding: 20px;
   }
 
-  .hero h1 { font-size: 48px; margin-bottom: 20px; color: var(--accent-color); }
-  .hero p { max-width: 700px; margin-bottom: 30px; font-size: 18px; }
+  .mobile-menu.open {
+    transform: translateY(0);
+  }
 
-  .buttons a {
-    display: flex;
-    align-items: center;
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .mobile-menu a {
+    color: var(--text);
     text-decoration: none;
-    margin: 0 10px;
-    padding: 12px 30px;
-    border-radius: var(--border-radius);
-    font-weight: 600;
-    transition: 0.3s;
+    font-size: 17px;
+    font-weight: 500;
+    padding: 14px 30px;
+    width: 80%;
+    text-align: center;
+    border-radius: 16px;
+    background: rgba(254, 152, 62, 0.1);
+    transition: var(--transition);
   }
 
-  .btn-discord { background: #ff8967;  border: 2px solid #ff8967; color: #fff; }
-  .btn-discord:hover { background: #ff886758; }
+  .mobile-menu a:hover {
+    background: #ff8c344f;
+  }
 
+  .mobile-menu .close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .hero {
+    margin-top: 90px;
+    padding: 120px 20px;
+    text-align: center;
+    position: relative;
+    z-index: 0;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(254,152,62,0.1)"/></svg>') repeat;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  .hero-glow {
+    position: absolute;
+    top: -250px; left: 50%;
+    width: 1000px;
+    height: 1000px;
+    background: radial-gradient(circle, rgba(255, 138, 35, 0.4) 0%, transparent 70%);
+    transform: translateX(-50%);
+    z-index: -1; 
+    pointer-events: none;
+  }
+
+  .hero h1 {
+    font-size: 52px;
+    font-weight: 800;
+    background: linear-gradient(135deg, #ff5a0e, #ff9900, #ff7300);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    max-width: 720px;
+    margin: 0 auto 40px;
+    font-size: 15px;
+    color: var(--text-muted);
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Nunito', sans-serif;
+    background: #e8842a;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 16px 36px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 17px;
+    border: 2px solid #fe983e;
+    transition: background 0.5s
+  }
+
+  .btn-primary:hover {
+    border: 2px solid #fe983e;
+    background: #e8832aa8;
+  }
+
+  .btn-primary i {
+    font-size: 20px;
+  }
 
   .section {
-    padding: 80px 20px;
-    max-width: 1200px;
+    padding: 100px 20px;
+    max-width: 1300px;
     margin: 0 auto;
   }
 
   .section h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
-    color: var(--accent-color);
     text-align: center;
+    font-size: 38px;
+    font-weight: 800;
+    margin-bottom: 60px;
+    background: linear-gradient(
+135deg, #fe983e, #ff6b35);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
   }
 
   .card {
     background: var(--card-bg);
-    padding: 20px;
+    padding: 28px;
     border-radius: var(--border-radius);
-    transition: background 0.3s;
+    transition: var(--transition);
+    border: 2px solid var(--card-hover);;
+    position: relative;
+    overflow: hidden;
   }
 
-  .card:hover { background: var(--card-hover); }
-  .card h3 { margin-bottom: 15px; font-size: 22px; color: var(--accent-color); }
-  .card p { font-size: 16px; }
-
-  .stats {
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-top: 40px;
+  .card:hover {
+    background: var(--card-hover);
   }
 
-  .stat {
-    background: var(--card-bg);
-    flex: 1 1 200px;
-    padding: 20px;
-    border-radius: var(--border-radius);
-    transition: background 0.3s;
+  .card h3 {
+  font-size: 22px;
+  margin-bottom: 14px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #ff9940, #ff5b20);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+  .card p {
+    font-size: 16px;
+    color: var(--text-muted);
   }
 
-  .stat:hover { background: var(--card-hover); }
-  .stat h3 { font-size: 28px; margin-bottom: 10px; color: var(--accent-color); }
-  .stat p { font-size: 18px; }
-
+  @media (max-width: 992px) {
+    .hero h1 { font-size: 42px; }
+    .hero p { font-size: 18px; }
+    .section h2 { font-size: 32px; }
+  }
 
   @media (max-width: 768px) {
-    header {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 15px 20px;
-      gap: 10px;
-    }
-
-    header nav {
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
-      gap: 10px;
-    }
-
-    header img { width: 40px; }
+    header { padding: 14px 20px; }
+    .header-container { padding: 0 10px; }
+    .nav-desktop { display: none; }
+    .mobile-menu-toggle { display: block; }
 
     .hero {
-      padding: 60px 15px;
+      margin-top: 80px;
+      padding: 80px 15px;
     }
 
-    .hero h1 { font-size: 32px; }
-    .hero p { font-size: 16px; }
+    .hero h1 { font-size: 36px; }
+    .btn-primary { padding: 14px 30px; font-size: 16px; }
 
-    .buttons a {
-      margin: 8px 0;
-      padding: 10px 20px;
-      font-size: 14px;
-    }
-
-    .section {
-      padding: 50px 15px;
-    }
-
-    .section h2 {
-      font-size: 26px;
-    }
-
-    .card h3 { font-size: 20px; }
-    .card p { font-size: 15px; }
-
-    .stat h3 { font-size: 22px; }
-    .stat p { font-size: 16px; }
-
-    #user-profile-popup {
-      top: 60px;
-      right: 20px;
-      width: 180px;
-      padding: 15px;
-    }
+    .section { padding: 80px 15px; }
+    .cards { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 480px) {
-    header {
-      padding: 10px 15px;
-    }
-
-    header nav {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    header nav a {
-      width: 100%;
-      text-align: center;
-      padding: 10px;
-    }
-
-    .hero h1 { font-size: 26px; }
-    .hero p { font-size: 14px; }
-
-    .cards {
-      grid-template-columns: 1fr;
-    }
+    .hero h1 { font-size: 30px; }
+    .hero p { font-size: 16px; }
+    .btn-primary { width: 100%; justify-content: center; }
   }
 </style>
 
-  
 <body>
 
-    <header>
-        <div class="logo">
-          <img src="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true" alt="Tyro Bot">
-        </div>
-        <nav>
-          <a href="#stats-section">Статистика</a>
-          <a href="https://t.me/therikky_lp">Телеграм</a>
-          <a href="https://discord.gg/2FwqWnERuy">Поддержка</a>
-          <a href="https://bots.server-discord.com/1418885255112163348">BSD</a>
-          </div>
-        </nav>
-      </header>
-      
+  <header id="header">
+    <div class="header-container">
+      <div class="logo">
+        <img src="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true" alt="Tyro Bot" />
+      </div>
 
-<section class="hero">
-  <h1>Tyro - логируй всё, что тебе нужно!</h1>
-  <p>Дополните встроенную систему аудита Discord и следите за всеми событиями на сервере: удаление и изменение сообщений, вход и выход из голосовых каналов, изменение ролей и многое другое.</p>
-  <div class="buttons">
-    <a class="btn-discord" href="https://discord.com/oauth2/authorize?client_id=1418885255112163348&scope=bot+applications.commands&permissions=8">Добавить в Discord</a>
+      <nav class="nav-desktop">
+        <a href="https://t.me/therikky_lp">Телеграм</a>
+        <a href="https://discord.gg/2FwqWnERuy">Поддержка</a>
+        <a href="https://bots.server-discord.com/1418885255112163348">Создал</a>
+        <a href="https://bots.server-discord.com/1418885255112163348">BSD</a>
+        <a href="https://top.gg/bot/1418885255112163348">top.gg</a>
+        <a href="https://bots.server-discord.com/1418885255112163348">Boticord</a>
+      </nav>
+
+      <button class="mobile-menu-toggle" id="menuToggle">
+        <i class="fas fa-ellipsis-v"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="close-btn" id="closeMenu">&times;</button>
+    <a href="https://t.me/therikky_lp"><img class="icon" src="https://img.icons8.com/?size=100&id=lUktdBVdL4Kb&format=png&color=ffffff"> Телеграм</a>
+    <a href="https://discord.gg/2FwqWnERuy"><img class="icon" src="https://img.icons8.com/?size=100&id=30888&format=png&color=ffffff"> Поддержка</a>
+    <a href="https://bots.server-discord.com/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=YuUElGscOqUp&format=png&color=ffffff"> Сайт создателя</a>
+    <a href="https://bots.server-discord.com/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> BSD</a>
+    <a href="https://top.gg/bot/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> top.gg</a>
+    <a href="https://bots.server-discord.com/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> Boticord</a>
   </div>
-</section>
 
-<section class="section" id="audit">
-  <h2>Система аудита</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Голосовые каналы</h3>
-      <p>Логирование входа, выхода, перемещения участников и изменения лимита участников.</p>
-    </div>
-    <div class="card">
-      <h3>Текстовые каналы</h3>
-      <p>Отслеживание создания, удаления, переименования, перемещения и изменения параметров каналов.</p>
-    </div>
-    <div class="card">
-      <h3>Сообщения</h3>
-      <p>Отслеживание удаления, редактирования, ответов и других действий с сообщениями.</p>
-    </div>
-    <div class="card">
-      <h3>Роли</h3>
-      <p>Логирование создания, удаления, изменения имени, цвета, иконки и позиции ролей.</p>
-    </div>
-    <div class="card">
-      <h3>Эмодзи и стикеры</h3>
-      <p>Отслеживание добавления, переименования и удаления эмодзи и стикеров.</p>
-    </div>
-    <div class="card">
-      <h3>Реакции</h3>
-      <p>Логирование добавления, удаления и удаления всех реакций на сообщение.</p>
-    </div>
-    <div class="card">
-      <h3>Треды</h3>
-      <p>Отслеживание создания, удаления, архивации и других действий с тредами.</p>
-    </div>
-    <div class="card">
-      <h3>Участники</h3>
-      <p>Логирование смены никнеймов, входов, выходов, приглашений и других действий участников.</p>
-    </div>
-    <div class="card">
-      <h3>Сервер</h3>
-      <p>Отслеживание изменений имени, аватара, описания, региона, уровня буста и баннера сервера.</p>
-    </div>
-    <div class="card">
-      <h3>События</h3>
-      <p>Логирование создания, удаления и редактирования событий: названия, даты, канала, локации, описания и изображения.</p>
-    </div>
-  </div>
-</section>
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <h1>Tyro — логируй всё, что тебе нужно!</h1>
+    <p>Дополните встроенную систему аудита Discord и следите за всеми событиями на сервере: удаление и изменение сообщений, вход и выход из голосовых каналов, изменение ролей и многое другое.</p>
+    <a href="https://discord.com/oauth2/authorize?client_id=1418885255112163348&scope=bot+applications.commands&permissions=8" class="btn-primary">
+      <i class="fab fa-discord"></i> Добавить в Discord
+    </a>
+  </section>
 
-
-<section class="section" id="audit">
-  <h2>Другое</h2>
-  <div class="cards">
-    <div class="card">
-      <h3>Межсерверный опыт</h3>
-      <p>При общении в войсах и текстом, вы получаете опыт, который по команде rank можно посмотреть в красивой карточке ранга.</p>
+  <section class="section" id="audit">
+    <h2>Что мы логируем?</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Голосовые каналы</h3>
+        <p>Логирование входа, выхода, перемещения участников и изменения лимита участников.</p>
+      </div>
+      <div class="card">
+        <h3>Текстовые каналы</h3>
+        <p>Отслеживание создания, удаления, переименования, перемещения и изменения параметров каналов.</p>
+      </div>
+      <div class="card">
+        <h3>Сообщения</h3>
+        <p>Отслеживание удаления, редактирования, ответов и других действий с сообщениями.</p>
+      </div>
+      <div class="card">
+        <h3>Роли</h3>
+        <p>Логирование создания, удаления, изменения имени, цвета, иконки и позиции ролей.</p>
+      </div>
+      <div class="card">
+        <h3>Эмодзи и стикеры</h3>
+        <p>Отслеживание добавления, переименования и удаления эмодзи и стикеров.</p>
+      </div>
+      <div class="card">
+        <h3>Реакции</h3>
+        <p>Логирование добавления, удаления и удаления всех реакций на сообщение.</p>
+      </div>
+      <div class="card">
+        <h3>Треды</h3>
+        <p>Отслеживание создания, удаления, архивации и других действий с тредами.</p>
+      </div>
+      <div class="card">
+        <h3>Участники</h3>
+        <p>Логирование смены никнеймов, входов, выходов, приглашений и других действий участников.</p>
+      </div>
+      <div class="card">
+        <h3>Сервер</h3>
+        <p>Отслеживание изменений имени, аватара, описания, региона, уровня буста и баннера сервера.</p>
+      </div>
+      <div class="card">
+        <h3>События</h3>
+        <p>Логирование создания, удаления и редактирования событий: названия, даты, канала, локации, описания и изображения.</p>
+      </div>
+      <div class="card">
+        <h3>Автомодерация</h3>
+        <p>Логирование создания, удаления и редактирования автомода: названия, ссылки, текста, типы и т.п.</p>
+      </div>
     </div>
-    <div class="card">
-      <h3>Автомодерация</h3>
-      <p>После активации команды бот начинает отслеживать все сообщения с приглашениями на другие серверы и автоматически их удаляет.</p>
-    </div>
-    <div class="card">
-      <h3>Роли</h3>
-      <p>Бот умеет выдавать и снимать роли у всех участников сервера, а также автоматически восстанавливает или назначает роли при заходе пользователя — либо те, что были у него ранее, либо заранее указанные администраторами.</p>
-    </div>
-    <div class="card" style="font-size: 18px; line-height: 1.5;">
-      <h3 style="font-size: 24px;">Информация о сервере</h3>
-      <p>Если бот находится на сервере, вы можете получить информацию о нём, указав ссылку или код сервера.</p>
-    </div>    
-  </div>
-</section>
+  </section>
 
-<section class="section" id="stats-section">
-  <h2>Статистика</h2>
-  <div class="stats">
-    <div class="stat">
-      <h3 id="servers-count">0</h3>
-      <p>Серверов</p>
-    </div>
-    <div class="stat">
-      <h3 id="users-count">0</h3>
-      <p>Пользователей</p>
-    </div>
-    <div class="stat">
-      <h3 id="command-count">0</h3>
-      <p>обработано команд</p>
-    </div>
-    <div class="stat">
-      <h3 id="logs-count">0</h3>
-      <p>Отправлено логов</p>
-    </div>
-  </div>
-</section>
+  <script>
 
-<script>
-async function updateStats() {
-  try {
-    const res = await fetch('https://de1.code.sraki.ovh:5000/api/stats');
-    const data = await res.json();
-    document.getElementById('servers-count').textContent = data.servers || 0;
-    document.getElementById('users-count').textContent = data.users || 0;
-    document.getElementById('logs-count').textContent = data.logs || 0;
-    document.getElementById('command-count').textContent = data.commandsHandled || 0;
-  } catch (err) {
-    console.error('Ошибка при обновлении статистики:', err);
-  }
-}
+    const menuToggle = document.getElementById('menuToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const closeMenu = document.getElementById('closeMenu');
 
-updateStats();
-setInterval(updateStats, 30000);
+    menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
 
-</script>
+    closeMenu.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+    });
 
+    mobileMenu.addEventListener('click', (e) => {
+      if (e.target === mobileMenu) {
+        mobileMenu.classList.remove('open');
+      }
+    });
 
+  </script>
 </body>
 </html>
