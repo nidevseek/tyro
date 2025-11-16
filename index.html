@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head><script type="text/javascript" src="/___vscode_livepreview_injected_script"></script>
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
   <title>Tyro - Discord Bot Logs</title>
@@ -8,344 +8,74 @@
   <meta property="og:title" content="Tyro — Discord Bot Logs" />
   <meta property="og:description" content="Дополните встроенную систему аудита Discord и следите за всеми событиями на сервере: удаление и изменение сообщений, вход и выход из голосовых каналов, изменение ролей и многое другое." />
   <meta property="og:image" content="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true" />
-  <meta property="og:image:width" content="512" />
-  <meta property="og:image:height" content="512" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Tyro — Discord Bot Logs" />
-  <meta name="twitter:description" content="Дополните встроенную систему аудита Discord и следите за всеми событиями на сервере: удаление и изменение сообщений, вход и выход из голосовых каналов, изменение ролей и многое другое." />
-  <meta name="twitter:image" content="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true" />
-
   <link rel="icon" type="image/png" href="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Stack+Sans+Notch:wght@200..700&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-</head>
-
-<style>
-  :root {
-    --main-bg: #0a0a0a;
-    --card-bg: #1a1a1a;
-    --card-hover: #252525;
-    --accent: #fe983e;
-    --accent-hover: #e8842a;
-    --text: #f0f0f0;
-    --text-muted: #aaaaaa;
-    --blur: 10px;
-    --border-radius: 20px;
-    --transition: all 0.3s ease;
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Unbounded', sans-serif;
-  }
-
-  body {
-    background: var(--main-bg);
-    color: var(--text);
-    line-height: 1.7;
-    overflow-x: hidden;
-  }
-
-  header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-    padding: 16px 50px;
-    background: rgba(18, 18, 18, 0.7);
-    backdrop-filter: blur(var(--blur));
-    -webkit-backdrop-filter: blur(var(--blur));
-    border-bottom: 2px solid rgb(255, 119, 0);
-  }
-
-  .header-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .logo img {
-    width: 55px;
-    height: 55px;
-    border-radius: 50%;
-    border: 2px solid var(--accent);
-    box-shadow: 0 0 15px rgba(254, 152, 62, 0.5);
-  }
-
-
-  /* Десктопное меню */
-  .nav-desktop {
-    display: flex;
-    gap: 12px;
-  }
-
-  .nav-desktop a {
-    color: var(--text);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 15px;
-    padding: 14px 18px;
-    border-radius: 12px;
-    transition: var(--transition);
-    position: relative;
-  }
-
-  .nav-desktop a:hover {
-    color: var(--accent);
-  }
-
-
-  .mobile-menu-toggle {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--text);
-    font-size: 24px;
-    cursor: pointer;
-    padding: 8px;
-    border-radius: 10px;
-    transition: var(--transition);
-  }
-
-  .mobile-menu {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.711);
-    backdrop-filter: blur(20px);
-    transform: translateY(-100%);
-    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    z-index: 999;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
-  }
-
-  .mobile-menu.open {
-    transform: translateY(0);
-  }
-
-  .icon {
-    width: 20px;
-    height: 20px;
-  }
-
-  .mobile-menu a {
-    color: var(--text);
-    text-decoration: none;
-    font-size: 17px;
-    font-weight: 500;
-    padding: 14px 30px;
-    width: 80%;
-    text-align: center;
-    border-radius: 16px;
-    background: rgba(254, 152, 62, 0.1);
-    transition: var(--transition);
-  }
-
-  .mobile-menu a:hover {
-    background: #ff8c344f;
-  }
-
-  .mobile-menu .close-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: none;
-    border: none;
-    color: var(--text);
-    font-size: 20px;
-    cursor: pointer;
-  }
-
-  .hero {
-    margin-top: 90px;
-    padding: 120px 20px;
-    text-align: center;
-    position: relative;
-    z-index: 0;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(254,152,62,0.1)"/></svg>') repeat;
-    opacity: 0.3;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  .hero-glow {
-    position: absolute;
-    top: -250px; left: 50%;
-    width: 1000px;
-    height: 1000px;
-    background: radial-gradient(circle, rgba(255, 138, 35, 0.4) 0%, transparent 70%);
-    transform: translateX(-50%);
-    z-index: -1; 
-    pointer-events: none;
-  }
-
-  .hero h1 {
-    font-size: 52px;
-    font-weight: 800;
-    background: linear-gradient(135deg, #ff5a0e, #ff9900, #ff7300);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 20px;
-    line-height: 1.2;
-  }
-
-  .hero p {
-    max-width: 720px;
-    margin: 0 auto 40px;
-    font-size: 15px;
-    color: var(--text-muted);
-  }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-family: 'Nunito', sans-serif;
-    background: #e8842a;
-    color: #ffffff;
-    font-weight: 700;
-    padding: 16px 36px;
-    border-radius: 50px;
-    text-decoration: none;
-    font-size: 17px;
-    border: 2px solid #fe983e;
-    transition: background 0.5s
-  }
-
-  .btn-primary:hover {
-    border: 2px solid #fe983e;
-    background: #e8832aa8;
-  }
-
-  .btn-primary i {
-    font-size: 20px;
-  }
-
-  .section {
-    padding: 100px 20px;
-    max-width: 1300px;
-    margin: 0 auto;
-  }
-
-  .section h2 {
-    text-align: center;
-    font-size: 38px;
-    font-weight: 800;
-    margin-bottom: 60px;
-    background: linear-gradient(
-135deg, #fe983e, #ff6b35);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 24px;
-  }
-
-  .card {
-    background: var(--card-bg);
-    padding: 28px;
-    border-radius: var(--border-radius);
-    transition: var(--transition);
-    border: 2px solid var(--card-hover);;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .card:hover {
-    background: var(--card-hover);
-  }
-
-  .card h3 {
-  font-size: 22px;
-  margin-bottom: 14px;
-  font-weight: 700;
-  background: linear-gradient(135deg, #ff9940, #ff5b20);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-  .card p {
-    font-size: 16px;
-    color: var(--text-muted);
-  }
-
-  @media (max-width: 992px) {
-    .hero h1 { font-size: 42px; }
-    .hero p { font-size: 18px; }
-    .section h2 { font-size: 32px; }
-  }
-
-  @media (max-width: 768px) {
-    header { padding: 14px 20px; }
-    .header-container { padding: 0 10px; }
-    .nav-desktop { display: none; }
-    .mobile-menu-toggle { display: block; }
-
-    .hero {
-      margin-top: 80px;
-      padding: 80px 15px;
+  <style>
+    :root {
+      --main-bg: #0a0a0a;
+      --card-bg: #1a1a1a;
+      --card-hover: #252525;
+      --accent: #fe983e;
+      --accent-hover: #e8842a;
+      --text: #f0f0f0;
+      --text-muted: #aaaaaa;
+      --blur: 10px;
+      --border-radius: 20px;
+      --transition: all 0.3s ease;
     }
-
-    .hero h1 { font-size: 36px; }
-    .btn-primary { padding: 14px 30px; font-size: 16px; }
-
-    .section { padding: 80px 15px; }
-    .cards { grid-template-columns: 1fr; }
-  }
-
-  @media (max-width: 480px) {
-    .hero h1 { font-size: 30px; }
-    .hero p { font-size: 16px; }
-    .btn-primary { width: 100%; justify-content: center; }
-  }
-</style>
-
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Unbounded',sans-serif}
+    body{background:var(--main-bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+    header{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:16px 50px;background:rgba(18,18,18,0.7);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));border-bottom:2px solid rgb(255,119,0)}
+    .header-container{display:flex;align-items:center;justify-content:space-between;max-width:1400px;margin:0 auto}
+    .logo img{width:55px;height:55px;border-radius:50%;border:2px solid var(--accent);box-shadow:0 0 15px rgba(254,152,62,0.5)}
+    .nav-desktop{display:flex;gap:12px}
+    .nav-desktop a{color:var(--text);text-decoration:none;font-weight:600;font-size:15px;padding:14px 18px;border-radius:12px;transition:var(--transition);position:relative}
+    .nav-desktop a:hover{color:var(--accent)}
+    .mobile-menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer;padding:8px;border-radius:10px;transition:var(--transition)}
+    .mobile-menu{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0.711);backdrop-filter:blur(20px);transform:translateY(-100%);transition:transform 0.4s cubic-bezier(0.25,0.8,0.25,1);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:20px}
+    .mobile-menu.open{transform:translateY(0)}
+    .icon{width:20px;height:20px}
+    .mobile-menu a{color:var(--text);text-decoration:none;font-size:17px;font-weight:500;padding:14px 30px;width:80%;text-align:center;border-radius:16px;background:rgba(254,152,62,0.1);transition:var(--transition)}
+    .mobile-menu a:hover{background:#ff8c344f}
+    .mobile-menu .close-btn{position:absolute;top:20px;right:20px;background:none;border:none;color:var(--text);font-size:20px;cursor:pointer}
+    .hero{margin-top:90px;padding:120px 20px;text-align:center;position:relative;z-index:0}
+    .hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(254,152,62,0.1)"/></svg>') repeat;opacity:0.3;pointer-events:none;z-index:-1}
+    .hero-glow{position:absolute;top:-250px;left:50%;width:1000px;height:1000px;background:radial-gradient(circle, rgba(255,138,35,0.4) 0%, transparent 70%);transform:translateX(-50%);z-index:-1;pointer-events:none}
+    .hero h1{font-size:52px;font-weight:800;background:linear-gradient(135deg,#ff5a0e,#ff9900,#ff7300);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:20px;line-height:1.2}
+    .hero p{max-width:720px;margin:0 auto 40px;font-size:15px;color:var(--text-muted)}
+    .btn-primary{display:inline-flex;align-items:center;gap:10px;font-family:'Nunito',sans-serif;background:#e8842a;color:#ffffff;font-weight:700;padding:16px 36px;border-radius:50px;text-decoration:none;font-size:17px;border:2px solid #fe983e;transition:background 0.5s}
+    .btn-primary:hover{border:2px solid #fe983e;background:#e8832aa8}
+    .btn-primary i{font-size:20px}
+    .section{padding:100px 20px;max-width:1300px;margin:0 auto}
+    .section h2{text-align:center;font-size:38px;font-weight:800;margin-bottom:60px;background:linear-gradient(135deg,#fe983e,#ff6b35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+    .card{background:var(--card-bg);padding:28px;border-radius:var(--border-radius);transition:var(--transition);border:2px solid var(--card-hover);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
+    .card:hover{background:var(--card-hover);}
+    .card h3{font-size:22px;margin-bottom:14px;font-weight:700;background:linear-gradient(135deg,#ff9940,#ff5b20);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .card p{font-size:16px;color:var(--text-muted);margin-bottom:12px}
+    .card img.server-avatar{width:100px;height:100px;border-radius:50%;border:2px solid var(--accent);margin-bottom:16px;box-shadow:0 0 10px rgba(254,152,62,0.4)}
+    .card .btn-primary{font-size:14px;padding:10px 24px;border-radius:40px;border:2px solid var(--accent)}
+    @media(max-width:992px){.hero h1{font-size:42px}.hero p{font-size:18px}.section h2{font-size:32px}}
+    @media(max-width:768px){header{padding:14px 20px}.header-container{padding:0 10px}.nav-desktop{display:none}.mobile-menu-toggle{display:block}.hero{margin-top:80px;padding:80px 15px}.hero h1{font-size:36px}.btn-primary{padding:14px 30px;font-size:16px;width:100%;justify-content:center}.section{padding:80px 15px}.cards{grid-template-columns:1fr !important;gap:16px}.card{padding:20px !important}}
+    @media(max-width:480px){.hero h1{font-size:28px}.hero p{font-size:14px}.card h3{font-size:18px}.card p{font-size:13px}}
+  </style>
+</head>
 <body>
-
   <header id="header">
     <div class="header-container">
-      <div class="logo">
-        <img src="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true" alt="Tyro Bot" />
-      </div>
-
+      <div class="logo"><img src="https://github.com/nidevseek/tyro/blob/main/img/avatar.png?raw=true" alt="Tyro Bot" /></div>
       <nav class="nav-desktop">
         <a href="https://t.me/therikky_lp">Телеграм</a>
         <a href="https://discord.gg/2FwqWnERuy">Поддержка</a>
-        <a href="https://bots.server-discord.com/1418885255112163348">Создал</a>
+        <a href="https://therikky.su">Создатель</a>
         <a href="https://bots.server-discord.com/1418885255112163348">BSD</a>
         <a href="https://top.gg/bot/1418885255112163348">top.gg</a>
-        <a href="https://bots.server-discord.com/1418885255112163348">Boticord</a>
+        <a href="https://boticord.top/bot/1418885255112163348">Boticord</a>
       </nav>
-
-      <button class="mobile-menu-toggle" id="menuToggle">
-        <i class="fas fa-ellipsis-v"></i>
-      </button>
+      <button class="mobile-menu-toggle" id="menuToggle"><i class="fas fa-ellipsis-v"></i></button>
     </div>
   </header>
 
@@ -353,91 +83,65 @@
     <button class="close-btn" id="closeMenu">&times;</button>
     <a href="https://t.me/therikky_lp"><img class="icon" src="https://img.icons8.com/?size=100&id=lUktdBVdL4Kb&format=png&color=ffffff"> Телеграм</a>
     <a href="https://discord.gg/2FwqWnERuy"><img class="icon" src="https://img.icons8.com/?size=100&id=30888&format=png&color=ffffff"> Поддержка</a>
-    <a href="https://bots.server-discord.com/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=YuUElGscOqUp&format=png&color=ffffff"> Сайт создателя</a>
+    <a href="https://therikky.su"><img class="icon" src="https://img.icons8.com/?size=100&id=YuUElGscOqUp&format=png&color=ffffff"> Сайт создателя</a>
     <a href="https://bots.server-discord.com/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> BSD</a>
     <a href="https://top.gg/bot/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> top.gg</a>
-    <a href="https://bots.server-discord.com/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> Boticord</a>
+    <a href="https://boticord.top/bot/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> Boticord</a>
   </div>
 
   <section class="hero">
     <div class="hero-glow"></div>
     <h1>Tyro — логируй всё, что тебе нужно!</h1>
     <p>Дополните встроенную систему аудита Discord и следите за всеми событиями на сервере: удаление и изменение сообщений, вход и выход из голосовых каналов, изменение ролей и многое другое.</p>
-    <a href="https://discord.com/oauth2/authorize?client_id=1418885255112163348&scope=bot+applications.commands&permissions=8" class="btn-primary">
-      <i class="fab fa-discord"></i> Добавить в Discord
-    </a>
+    <a href="https://discord.com/oauth2/authorize?client_id=1418885255112163348&scope=bot+applications.commands&permissions=8" class="btn-primary"><i class="fab fa-discord"></i> Добавить в Discord</a>
   </section>
 
-  <section class="section" id="audit">
+  <section class="section" id="audit-logs">
     <h2>Что мы логируем?</h2>
     <div class="cards">
+      <div class="card"><h3>Голосовые каналы</h3><p>Логирование входа, выхода, перемещения участников и изменения лимита участников.</p></div>
+      <div class="card"><h3>Текстовые каналы</h3><p>Отслеживание создания, удаления, переименования, перемещения и изменения параметров каналов.</p></div>
+      <div class="card"><h3>Сообщения</h3><p>Отслеживание удаления, редактирования, ответов и других действий с сообщениями.</p></div>
+      <div class="card"><h3>Роли</h3><p>Логирование создания, удаления, изменения имени, цвета, иконки и позиции ролей.</p></div>
+      <div class="card"><h3>Эмодзи и стикеры</h3><p>Отслеживание добавления, переименования и удаления эмодзи и стикеров.</p></div>
+      <div class="card"><h3>Реакции</h3><p>Логирование добавления, удаления и удаления всех реакций на сообщение.</p></div>
+      <div class="card"><h3>Треды</h3><p>Отслеживание создания, удаления, архивации и других действий с тредами.</p></div>
+      <div class="card"><h3>Участники</h3><p>Логирование смены никнеймов, входов, выходов, приглашений и других действий участников.</p></div>
+      <div class="card"><h3>Сервер</h3><p>Отслеживание изменений имени, аватара, описания, региона, уровня буста и баннера сервера.</p></div>
+      <div class="card"><h3>События</h3><p>Логирование создания, удаления и редактирования событий: названия, даты, канала, локации, описания и изображения.</p></div>
+      <div class="card"><h3>Автомодерация</h3><p>Логирование создания, удаления и редактирования автомода: названия, ссылки, текста, типы и т.п.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="audit-commands">
+    <h2>Какие команды?</h2>
+    <div class="cards">
+      <div class="card"><h3>log</h3><p>Основная команда бота, через неё ставится канал для логов и т.п.</p><p style="font-style:italic;font-size:12px;color:#666;">Боту могут потребоваться права управление серверов и просмотр журнала аудита, выдайте их.</p></div>
+      <div class="card"><h3>lang</h3><p>Смена языка для команд и логов вашего сервера.</p><p style="font-style:italic;font-size:12px;color:#666;">Пока что есть всего 2 языка.</p></div>
+      <div class="card"><h3>info</h3><p>Просмотр информации о нагрузке, статистике и ссылках бота.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="support">
+    <h2>Сервера поддержки</h2>
+    <div class="cards">
       <div class="card">
-        <h3>Голосовые каналы</h3>
-        <p>Логирование входа, выхода, перемещения участников и изменения лимита участников.</p>
-      </div>
-      <div class="card">
-        <h3>Текстовые каналы</h3>
-        <p>Отслеживание создания, удаления, переименования, перемещения и изменения параметров каналов.</p>
-      </div>
-      <div class="card">
-        <h3>Сообщения</h3>
-        <p>Отслеживание удаления, редактирования, ответов и других действий с сообщениями.</p>
-      </div>
-      <div class="card">
-        <h3>Роли</h3>
-        <p>Логирование создания, удаления, изменения имени, цвета, иконки и позиции ролей.</p>
-      </div>
-      <div class="card">
-        <h3>Эмодзи и стикеры</h3>
-        <p>Отслеживание добавления, переименования и удаления эмодзи и стикеров.</p>
-      </div>
-      <div class="card">
-        <h3>Реакции</h3>
-        <p>Логирование добавления, удаления и удаления всех реакций на сообщение.</p>
-      </div>
-      <div class="card">
-        <h3>Треды</h3>
-        <p>Отслеживание создания, удаления, архивации и других действий с тредами.</p>
-      </div>
-      <div class="card">
-        <h3>Участники</h3>
-        <p>Логирование смены никнеймов, входов, выходов, приглашений и других действий участников.</p>
-      </div>
-      <div class="card">
-        <h3>Сервер</h3>
-        <p>Отслеживание изменений имени, аватара, описания, региона, уровня буста и баннера сервера.</p>
-      </div>
-      <div class="card">
-        <h3>События</h3>
-        <p>Логирование создания, удаления и редактирования событий: названия, даты, канала, локации, описания и изображения.</p>
-      </div>
-      <div class="card">
-        <h3>Автомодерация</h3>
-        <p>Логирование создания, удаления и редактирования автомода: названия, ссылки, текста, типы и т.п.</p>
+        <img class="server-avatar" src="https://cdn.discordapp.com/icons/1413524986374787265/ac5a6cfe4015f9fc9acd912491482c0e.png?size=480" alt="therikky_ team">
+        <h3>therikky_ team</h3>
+        <p>Сервер поддержки всех проектов therikky_</p>
+        <p style="font-style:italic;font-size:12px;color:#666;">27 пользователей</p>
+        <a href="https://discord.gg/2FwqWnERuy" class="btn-primary">Присоединиться</a>
       </div>
     </div>
   </section>
 
   <script>
-
-    const menuToggle = document.getElementById('menuToggle');
-    const mobileMenu = document.getElementById('mobileMenu');
-    const closeMenu = document.getElementById('closeMenu');
-
-    menuToggle.addEventListener('click', () => {
-      mobileMenu.classList.toggle('open');
-    });
-
-    closeMenu.addEventListener('click', () => {
-      mobileMenu.classList.remove('open');
-    });
-
-    mobileMenu.addEventListener('click', (e) => {
-      if (e.target === mobileMenu) {
-        mobileMenu.classList.remove('open');
-      }
-    });
-
+    const menuToggle=document.getElementById('menuToggle');
+    const mobileMenu=document.getElementById('mobileMenu');
+    const closeMenu=document.getElementById('closeMenu');
+    menuToggle.addEventListener('click',()=>{mobileMenu.classList.toggle('open')});
+    closeMenu.addEventListener('click',()=>{mobileMenu.classList.remove('open')});
+    mobileMenu.addEventListener('click',(e)=>{if(e.target===mobileMenu){mobileMenu.classList.remove('open')}});
   </script>
 </body>
 </html>
