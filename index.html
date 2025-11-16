@@ -185,8 +185,7 @@
         el.textContent = el.parentElement.getAttribute(`data-${lang}`);
       });
       document.querySelectorAll('.btn-primary span').forEach(span => {
-        const parent = span.parentElement;
-        span.textContent = parent.getAttribute(`data-${lang}`);
+        span.textContent = span.getAttribute(`data-${lang}`);
       });
       document.querySelectorAll('.btn-primary').forEach(btn => {
         if (!btn.querySelector('span')) {
@@ -194,6 +193,7 @@
         }
       });
     }
+    
 
     langSwitcher.addEventListener('click', () => {
       const newLang = currentLang === 'ru' ? 'en' : 'ru';
