@@ -121,6 +121,7 @@
       <div class="card"><h3>log</h3><p data-ru="Основная команда бота, через неё ставится канал для логов и т.п." data-en="The main bot command, used to set the log channel, etc.">Основная команда бота, через неё ставится канал для логов и т.п.</p><p style="font-style:italic;font-size:12px;color:#666;" data-ru="Боту могут потребоваться права управление серверов и просмотр журнала аудита, выдайте их." data-en="The bot may need Manage Server and View Audit Log permissions, grant them.">Боту могут потребоваться права управление серверов и просмотр журнала аудита, выдайте их.</p></div>
       <div class="card"><h3>lang</h3><p data-ru="Смена языка для команд и логов вашего сервера." data-en="Change the language for commands and logs on your server.">Смена языка для команд и логов вашего сервера.</p><p style="font-style:italic;font-size:12px;color:#666;" data-ru="Пока что есть всего 2 языка." data-en="Currently only 2 languages available.">Пока что есть всего 2 языка.</p></div>
       <div class="card"><h3>info</h3><p data-ru="Просмотр информации о нагрузке, статистике и ссылках бота." data-en="View information about load, statistics, and bot links.">Просмотр информации о нагрузке, статистике и ссылках бота.</p></div>
+      <div class="card"><h3>settings</h3><p data-ru="Позволяет настроить, в какой канал будут приходить какие логи по категориям." data-en="Allows you to configure which logs go to which channel by category.">Позволяет настроить, в какой канал будут приходить какие логи по категориям.</p></div>
     </div>
   </section>
   <section class="section" id="support">
@@ -130,7 +131,8 @@
         <img class="server-avatar" src="https://cdn.discordapp.com/icons/1413524986374787265/ac5a6cfe4015f9fc9acd912491482c0e.png?size=480" alt="therikky_ team">
         <h3>therikky_ team</h3>
         <p data-ru="Сервер поддержки всех проектов therikky_" data-en="Support server for all therikky_ projects">Сервер поддержки всех проектов therikky_</p>
-        <p style="font-style:italic;font-size:12px;color:#666;" data-ru="27 пользователей" data-en="27 members">27 пользователей</p>
+        <p id="guild-online" style="font-style:italic;font-size:12px;color:#666;"
+        data-ru="0 пользователей" data-en="0 members"></p>
         <a href="https://discord.gg/2FwqWnERuy" class="btn-primary" data-ru="Присоединиться" data-en="Join">Присоединиться</a>
       </div>
     </div>
@@ -201,6 +203,27 @@
     });
 
     setLanguage(currentLang);
+
+    async function loadGuild() {
+  try {
+    const res = await fetch("https://discord.com/api/guilds/1413524986374787265/widget.json");
+    const data = await res.json();
+
+    const online = data.presence_count;
+
+    const el = document.getElementById("guild-online");
+
+    el.setAttribute("data-ru", online + " пользователей онлайн");
+    el.setAttribute("data-en", online + " member online");
+
+    el.textContent = el.getAttribute(`data-${currentLang}`);
+
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+loadGuild();
   </script>
 </body>
 </html>
