@@ -17,7 +17,7 @@
     :root {
       --main-bg: #0a0a0a;
       --card-bg: #1a1a1a;
-      --card-hover: #252525;
+      --card-hover: #1d1d1d;
       --accent: #fe983e;
       --accent-hover: #e8842a;
       --text: #f0f0f0;
@@ -30,16 +30,19 @@
     body{background:var(--main-bg);color:var(--text);line-height:1.7;overflow-x:hidden}
     body{background:var(--main-bg);color:var(--text);line-height:1.7;overflow-x:hidden} 
     header{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:16px 50px;background:rgba(0, 0, 0, 0.4);backdrop-filter:blur(var(--blur));-webkit-backdrop-filter:blur(var(--blur));display:flex;justify-content:center;transition:all 0.5s ease} 
-    header::after{content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--accent);transition:all 0.5s ease} 
-    .header-container{display:flex;align-items:center;justify-content:space-between;width:90%;max-width:1200px;transition:all 0.5s ease} 
-    .logo img{width:60px;height:60px;border-radius:50%;border:2px solid var(--accent);transition:all 0.5s ease} 
-    header.shrink{padding:6px 15px;margin-left:10%;margin-top:20px;border-radius:30px;width:80%;border:2px solid var(--accent);background:rgba(0, 0, 0, 0.4);transition:all 0.5s ease} 
+    header::after{content:"";position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--accent);transition:all 0.5s ease}
+    .header-container{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:1200px;transition:all 0.5s ease;margin:0 auto}
+    header.shrink{padding:6px 15px;margin-left:10%;margin-top:20px;border-radius:30px;width:80%;border:2px solid var(--accent);background:rgba(0,0,0,0.4);transition:all 0.5s ease;overflow:hidden}
     header.shrink::after{height:0;opacity:0}
-    header.shrink .logo img{width:40px;height:40px;display:block} 
+    header.shrink .header-container{width:100%;max-width:100%}
+    header nav{display:flex;white-space:nowrap;gap:20px}
+    header.shrink nav a{font-size:0.9rem;transition:all 0.5s ease}
+    .logo img{width:60px;height:60px;border-radius:50%;border:2px solid var(--accent);transition:all 0.5s ease;box-shadow:#e8842a 0px 0px 10px}
+    header.shrink .logo img{width:40px;height:40px;display:block}
     .nav-desktop{display:flex;gap:12px}
     .nav-desktop a{color:var(--text);text-decoration:none;font-weight:600;font-size:15px;padding:14px 18px;border-radius:12px;transition:all 0.3s ease;position:relative}
     .nav-desktop a:hover{color:var(--accent)}
-    @media(min-width:769px){header{border-bottom:none}}
+    @media(min-width:900px){header{border-bottom:none}}
     .mobile-menu-toggle{display:none;background:none;border:none;color:var(--text);font-size:24px;cursor:pointer;padding:8px;border-radius:10px;transition:var(--transition)}
     .mobile-menu{position:fixed;top:0;left:0;width:100%;height:100vh;background:rgba(0,0,0,0.711);backdrop-filter:blur(20px);transform:translateY(-100%);transition:transform 0.4s cubic-bezier(0.25,0.8,0.25,1);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:20px}
     .mobile-menu.open{transform:translateY(0)}
@@ -58,14 +61,32 @@
     .section{padding:100px 20px;max-width:1300px;margin:0 auto}
     .section h2{text-align:center;font-size:38px;font-weight:800;margin-bottom:60px;background:linear-gradient(135deg,#fe983e,#ff6b35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+    .carde{display:grid;grid-template-columns:repeat(auto-fit,minmax(600px,1fr));gap:24px}
     .card{background:var(--card-bg);padding:28px;border-radius:var(--border-radius);transition:var(--transition);border:2px solid var(--card-hover);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
     .card:hover{background:var(--card-hover);}
-    .card h3{font-size:22px;margin-bottom:14px;font-weight:700;background:linear-gradient(135deg,#ff9940,#ff5b20);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .card p{font-size:16px;color:var(--text-muted);margin-bottom:12px}
+    .card h3{font-size:20px;padding: 10px;margin-bottom:14px;font-weight:700;background:linear-gradient(135deg,#ca803f,#ff7300);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .card p{font-size:12px;color:var(--text-muted);margin-bottom:12px}
     .card img.server-avatar{width:100px;height:100px;border-radius:50%;border:2px solid var(--accent);margin-bottom:16px;box-shadow:0 0 10px rgba(254,152,62,0.4)}
     .card .btn-primary{font-size:14px;padding:10px 24px;border-radius:40px;border:2px solid var(--accent)}
-    
-    /* Language switcher */
+    #audit-commands .card {
+      align-items: flex-start;
+      text-align: left;
+      padding: 30px;
+    }
+
+    #audit-commands .card h3 {
+      background: #fff;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      position: relative;
+    }
+
+    #audit-commands .card h3::before {
+      content: '/';
+      -webkit-text-fill-color: var(--accent);
+      margin-right: 5px;
+    }
+
     .lang-switcher{position:fixed;bottom:30px;right:30px;z-index:1001;display:flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;background:rgba(26,26,26,0.8);backdrop-filter:blur(10px);cursor:pointer;transition:var(--transition);border:2px solid transparent}
     .lang-switcher:hover{border:2px solid #aaa;border-radius:50%}
     .lang-switcher img{width:32px;height:32px;border-radius:50%}
@@ -83,7 +104,7 @@
         <a data-ru="Телеграм" data-en="Telegram" href="https://t.me/therikky_lp">Телеграм</a>
         <a data-ru="Поддержка" data-en="Support" href="https://discord.gg/2FwqWnERuy">Поддержка</a>
         <a data-ru="Создатель" data-en="Creator" href="https://therikky.su">Создатель</a>
-        <a data-ru="BSD" data-en="BSD" href="https://bots.server-discord.com/1418885255112163348">BSD</a>
+        <a data-ru="Стата" data-en="Stats" href="https://topstats.gg/discord/bots/1418885255112163348">Стата</a>
         <a data-ru="top.gg" data-en="top.gg" href="https://top.gg/bot/1418885255112163348">top.gg</a>
         <a data-ru="Boticord" data-en="Boticord" href="https://boticord.top/bot/1418885255112163348">Boticord</a>
       </nav>
@@ -95,7 +116,7 @@
     <a href="https://t.me/therikky_lp"><img class="icon" src="https://img.icons8.com/?size=100&id=lUktdBVdL4Kb&format=png&color=ffffff"> <span data-ru="Телеграм" data-en="Telegram">Телеграм</span></a>
     <a href="https://discord.gg/2FwqWnERuy"><img class="icon" src="https://img.icons8.com/?size=100&id=30888&format=png&color=ffffff"> <span data-ru="Поддержка" data-en="Support">Поддержка</span></a>
     <a href="https://therikky.su"><img class="icon" src="https://img.icons8.com/?size=100&id=YuUElGscOqUp&format=png&color=ffffff"> <span data-ru="Сайт создателя" data-en="Creator's Site">Сайт создателя</span></a>
-    <a href="https://bots.server-discord.com/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> <span data-ru="BSD" data-en="BSD">BSD</span></a>
+    <a href="https://topstats.gg/discord/bots/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> <span data-ru="Стата" data-en="Stats">Стата</span></a>
     <a href="https://top.gg/bot/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> <span data-ru="top.gg" data-en="top.gg">top.gg</span></a>
     <a href="https://boticord.top/bot/1418885255112163348"><img class="icon" src="https://img.icons8.com/?size=100&id=I7J76hq8WtC6&format=png&color=ffffff"> <span data-ru="Boticord" data-en="Boticord">Boticord</span></a>
   </div>
@@ -125,7 +146,7 @@
   </section>
   <section class="section" id="audit-commands">
     <h2 data-ru="Какие команды?" data-en="What commands?">Какие команды?</h2>
-    <div class="cards">
+    <div class="carde">
       <div class="card"><h3>log</h3><p data-ru="Основная команда бота, через неё ставится канал для логов и т.п." data-en="The main bot command, used to set the log channel, etc.">Основная команда бота, через неё ставится канал для логов и т.п.</p><p style="font-style:italic;font-size:12px;color:#666;" data-ru="Боту могут потребоваться права управление серверов и просмотр журнала аудита, выдайте их." data-en="The bot may need Manage Server and View Audit Log permissions, grant them.">Боту могут потребоваться права управление серверов и просмотр журнала аудита, выдайте их.</p></div>
       <div class="card"><h3>lang</h3><p data-ru="Смена языка для команд и логов вашего сервера." data-en="Change the language for commands and logs on your server.">Смена языка для команд и логов вашего сервера.</p><p style="font-style:italic;font-size:12px;color:#666;" data-ru="Пока что есть всего 2 языка." data-en="Currently only 2 languages available.">Пока что есть всего 2 языка.</p></div>
       <div class="card"><h3>info</h3><p data-ru="Просмотр информации о нагрузке, статистике и ссылках бота." data-en="View information about load, statistics, and bot links.">Просмотр информации о нагрузке, статистике и ссылках бота.</p></div>
@@ -133,15 +154,23 @@
     </div>
   </section>
   <section class="section" id="support">
-    <h2 data-ru="Сервер поддержки" data-en="Support Server">Сервер поддержки</h2>
+    <h2 data-ru="Получить поддержку" data-en="Support Server">Получить поддержку</h2>
     <div class="cards">
       <div class="card">
         <img class="server-avatar" src="https://cdn.discordapp.com/icons/1413524986374787265/ac5a6cfe4015f9fc9acd912491482c0e.png?size=480" alt="therikky_ team">
         <h3>therikky_ team</h3>
-        <p data-ru="Сервер поддержки всех проектов therikky_" data-en="Support server for all therikky_ projects">Сервер поддержки всех проектов therikky_</p>
+        <p data-ru="Сервер поддержки всех проектов therikky_" data-en="Support server for all therikky_ team projects">Сервер поддержки всех проектов therikky_</p>
         <p id="guild-online" style="font-style:italic;font-size:12px;color:#666;"
         data-ru="0 пользователей" data-en="0 members"></p>
         <a href="https://discord.gg/2FwqWnERuy" class="btn-primary" data-ru="Присоединиться" data-en="Join">Присоединиться</a>
+      </div>
+      <div class="card">
+        <img class="server-avatar" src="https://cdn.discordapp.com/attachments/1438118263354556488/1480124142304104508/uP2TX7Y.png?ex=69ae8886&is=69ad3706&hm=1d06e5c8be5efe68fa65eb1794d2c66a89de01220d21cb013d4ba9e790204f69&" alt="therikky_ team">
+        <h3>ス | therikky_</h3>
+        <p data-ru="Чат в telegram где чаще всего общается создатель" data-en="chat in telegram where most of the time therikky_ creates">Чат в telegram где чаще всего общается создатель</p>
+        <p id="guild-online" style="font-style:italic;font-size:12px;color:#666;"
+        data-ru="47 пользователей" data-en="47 members"></p>
+        <a href="https://t.me/therikky_chat" class="btn-primary" data-ru="Присоединиться" data-en="Join">Присоединиться</a>
       </div>
     </div>
   </section>
