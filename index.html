@@ -58,20 +58,32 @@
     .btn-primary{display:inline-flex;align-items:center;gap:10px;font-family:'Nunito',sans-serif;background:#e8842a;color:#ffffff;font-weight:700;padding:16px 36px;border-radius:50px;text-decoration:none;font-size:17px;border:2px solid #fe983e;transition:background 0.5s}
     .btn-primary:hover{border:2px solid #fe983e;background:#e8832aa8}
     .btn-primary i{font-size:20px}
-    .section{padding:100px 20px;max-width:1300px;margin:0 auto}
-    .section h2{text-align:center;font-size:38px;font-weight:800;margin-bottom:60px;background:linear-gradient(135deg,#fe983e,#ff6b35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
-    .carde{display:grid;grid-template-columns:repeat(auto-fit,minmax(600px,1fr));gap:24px}
-    .card{background:var(--card-bg);padding:28px;border-radius:var(--border-radius);transition:var(--transition);border:2px solid var(--card-hover);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
+    .section{padding:72px 20px;max-width:1300px;margin:0 auto}
+    .section h2{text-align:center;font-size:34px;font-weight:800;margin-bottom:36px;background:linear-gradient(135deg,#fe983e,#ff6b35);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+    .carde{display:grid;grid-template-columns:repeat(auto-fit,minmax(520px,1fr));gap:18px}
+    .card{background:#181818;padding:22px;border-radius:var(--border-radius);transition:var(--transition);border:2px solid #2b2b2b;;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center}
     .card:hover{background:var(--card-hover);}
     .card h3{font-size:20px;padding: 10px;margin-bottom:14px;font-weight:700;background:linear-gradient(135deg,#ca803f,#ff7300);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
     .card p{font-size:12px;color:var(--text-muted);margin-bottom:12px}
     .card img.server-avatar{width:100px;height:100px;border-radius:50%;border:2px solid var(--accent);margin-bottom:16px;box-shadow:0 0 10px rgba(254,152,62,0.4)}
     .card .btn-primary{font-size:14px;padding:10px 24px;border-radius:40px;border:2px solid var(--accent)}
+
+    #audit-logs {
+      max-width: 1100px;
+      padding: 30px 20px 40px;
+    }
+
+    #audit-commands .carde {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
     #audit-commands .card {
       align-items: flex-start;
       text-align: left;
-      padding: 30px;
+      padding: 20px;
+      min-height: 170px;
     }
 
     #audit-commands .card h3 {
@@ -86,13 +98,86 @@
       -webkit-text-fill-color: var(--accent);
       margin-right: 5px;
     }
+    
+    #audit-logs h2 {
+      text-align: center;
+      background: linear-gradient(90deg, #f8ae2b, #ff7f00);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      font-size: 30px;
+      text-transform: uppercase;
+    }
+    #audit-logs .log-grid {
+      display: grid;
+      grid-template-columns: 10;
+      grid-template-areas:
+        "msg msg react"
+        "emoji voice voice"
+        "text text thread"
+        "webhook roles roles"
+        "members members invite"
+        "automod server server";
+      gap: 18px;
+    }
+    #audit-logs .log-card {
+      background: #181818;
+      border: 2px solid #2b2b2b;
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    #audit-logs .log-card h3 {
+      color: #f2f2f2;
+      font-size: 20px;
+      -webkit-text-fill-color: initial;
+      padding: 0;
+    }
+    #audit-logs .log-card h3.accent { color: #ff9800; }
+    #audit-logs .log-card p {
+      color: #9ea0a5;
+      font-size: 15px;
+    }
+    #audit-logs .center { text-align: right; align-items: flex-end; }
+    #audit-logs .left { text-align: left; align-items: flex-start; }
+    #audit-logs .tiny p { font-size: 15px; }
+    #audit-logs .grad {
+      background: linear-gradient(90deg, #5f6bff, #b923ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #audit-logs .a-msg { grid-area: msg; }
+    #audit-logs .a-react { grid-area: react; }
+    #audit-logs .a-emoji { grid-area: emoji; }
+    #audit-logs .a-voice { grid-area: voice; }
+    #audit-logs .a-text { grid-area: text; }
+    #audit-logs .a-thread { grid-area: thread; }
+    #audit-logs .a-webhook { grid-area: webhook; }
+    #audit-logs .a-roles { grid-area: roles; }
+    #audit-logs .a-members { grid-area: members; }
+    #audit-logs .a-invite { grid-area: invite; }
+    #audit-logs .a-automod { grid-area: automod; }
+    #audit-logs .a-server { grid-area: server; }
 
     .lang-switcher{position:fixed;bottom:30px;right:30px;z-index:1001;display:flex;align-items:center;justify-content:center;width:60px;height:60px;border-radius:50%;background:rgba(26,26,26,0.8);backdrop-filter:blur(10px);cursor:pointer;transition:var(--transition);border:2px solid transparent}
     .lang-switcher:hover{border:2px solid #aaa;border-radius:50%}
     .lang-switcher img{width:32px;height:32px;border-radius:50%}
     
-    @media(max-width:992px){.hero h1{font-size:42px}.hero p{font-size:18px}.section h2{font-size:32px}}
-    @media(max-width:768px){header{padding:14px 15px;border-bottom:2px solid rgb(255,119,0)}header.shrink{padding:6px 15px}.header-container{padding:0 10px}.nav-desktop{display:none}.mobile-menu-toggle{display:block}.logo img{width:50px;height:50px}header.shrink .logo img{width:35px;height:35px}.hero{margin-top:80px;padding:80px 15px}.hero h1{font-size:36px}.btn-primary{padding:14px 30px;font-size:16px;width:100%;justify-content:center}.section{padding:80px 15px}.cards{grid-template-columns:1fr !important;gap:16px}.card{padding:20px !important}.lang-switcher{bottom:20px;right:20px;width:50px;height:50px}.lang-switcher img{width:28px;height:28px}}
+    @media(max-width:992px){.hero h1{font-size:42px}.hero p{font-size:18px}.section h2{font-size:30px}}
+    @media(max-width:1100px){
+      #audit-logs .log-grid{
+        grid-template-columns:1fr;
+        grid-template-areas:"msg" "react" "emoji" "voice" "text" "thread" "webhook" "roles" "members" "invite" "automod" "server";
+      }
+    }
+    @media(max-width:980px){
+      #audit-commands .carde{grid-template-columns:1fr}
+    }
+    @media(max-width:768px){header{padding:14px 15px;border-bottom:2px solid rgb(255,119,0)}header.shrink{padding:6px 15px}.header-container{padding:0 10px}.nav-desktop{display:none}.mobile-menu-toggle{display:block}.logo img{width:50px;height:50px}header.shrink .logo img{width:35px;height:35px}.hero{margin-top:80px;padding:70px 15px}.hero h1{font-size:32px}.btn-primary{padding:12px 24px;font-size:15px;width:100%;justify-content:center}.section{padding:52px 12px}.cards{grid-template-columns:1fr !important;gap:12px}.card{padding:16px !important}.lang-switcher{bottom:20px;right:20px;width:50px;height:50px}.lang-switcher img{width:28px;height:28px}#audit-logs{padding:20px 10px 24px}#audit-logs h2{margin-bottom:12px}#audit-logs .log-grid{gap:10px}#audit-logs .log-card{min-height:unset;border-radius:18px;padding:14px}#audit-logs .log-card h3{font-size:18px}#audit-logs .log-card p{font-size:13px;line-height:1.35}#audit-commands .carde{gap:12px}#audit-commands .card{padding:16px !important;min-height:unset}#audit-commands .card h3{font-size:20px !important;margin-bottom:10px}#audit-commands .card p{font-size:13px;line-height:1.4;margin-bottom:8px}}
     @media(max-width:480px){.hero h1{font-size:28px}.hero p{font-size:14px}.card h3{font-size:18px}.card p{font-size:13px}}
   </style>
 </head>
@@ -127,23 +212,57 @@
     <a href="https://discord.com/oauth2/authorize?client_id=1418885255112163348&scope=bot+applications.commands&permissions=8" class="btn-primary"><i class="fab fa-discord"></i> <span data-ru="Добавить в Discord" data-en="Add to Discord">Добавить в Discord</span></a>
   </section>
   <section class="section" id="audit-logs">
-    <h2 data-ru="Что мы логируем?" data-en="What do we log?">Что мы логируем?</h2>
-    <div class="cards">
-      <div class="card"><h3 data-ru="Голосовые каналы" data-en="Voice Channels">Голосовые каналы</h3><p data-ru="Логирование входа, выхода, перемещения участников и изменения лимита участников." data-en="Logging joins, leaves, moves of members, and changes to member limits.">Логирование входа, выхода, перемещения участников и изменения лимита участников.</p></div>
-      <div class="card"><h3 data-ru="Текстовые каналы" data-en="Text Channels">Текстовые каналы</h3><p data-ru="Отслеживание создания, удаления, переименования, перемещения и изменения параметров каналов." data-en="Tracking creation, deletion, renaming, moving, and parameter changes of channels.">Отслеживание создания, удаления, переименования, перемещения и изменения параметров каналов.</p></div>
-      <div class="card"><h3 data-ru="Сообщения" data-en="Messages">Сообщения</h3><p data-ru="Отслеживание удаления, редактирования, ответов и других действий с сообщениями." data-en="Tracking deletion, editing, replies, and other actions with messages.">Отслеживание удаления, редактирования, ответов и других действий с сообщениями.</p></div>
-      <div class="card"><h3 data-ru="Роли" data-en="Roles">Роли</h3><p data-ru="Логирование создания, удаления, изменения имени, цвета, иконки и позиции ролей." data-en="Logging creation, deletion, name, color, icon, and position changes of roles.">Логирование создания, удаления, изменения имени, цвета, иконки и позиции ролей.</p></div>
-      <div class="card"><h3 data-ru="Эмодзи и стикеры" data-en="Emojis and Stickers">Эмодзи и стикеры</h3><p data-ru="Отслеживание добавления, переименования и удаления эмодзи и стикеров." data-en="Tracking addition, renaming, and deletion of emojis and stickers.">Отслеживание добавления, переименования и удаления эмодзи и стикеров.</p></div>
-      <div class="card"><h3 data-ru="Реакции" data-en="Reactions">Реакции</h3><p data-ru="Логирование добавления, удаления и удаления всех реакций на сообщение." data-en="Logging addition, removal, and clearing of all reactions on a message.">Логирование добавления, удаления и удаления всех реакций на сообщение.</p></div>
-      <div class="card"><h3 data-ru="Треды" data-en="Threads">Треды</h3><p data-ru="Отслеживание создания, удаления, архивации и других действий с тредами." data-en="Tracking creation, deletion, archiving, and other actions with threads.">Отслеживание создания, удаления, архивации и других действий с тредами.</p></div>
-      <div class="card"><h3 data-ru="Участники" data-en="Members">Участники</h3><p data-ru="Логирование смены никнеймов, входов, выходов, приглашений и других действий участников." data-en="Logging nickname changes, joins, leaves, invites, and other member actions.">Логирование смены никнеймов, входов, выходов, приглашений и других действий участников.</p></div>
-      <div class="card"><h3 data-ru="Сервер" data-en="Server">Сервер</h3><p data-ru="Отслеживание изменений имени, аватара, описания, REGION, уровня буста и баннера сервера." data-en="Tracking changes to name, avatar, description, region, boost level, and banner of the server.">Отслеживание изменений имени, аватара, описания, региона, уровня буста и баннера сервера.</p></div>
-      <div class="card"><h3 data-ru="События" data-en="Events">События</h3><p data-ru="Логирование создания, удаления и редактирования событий: названия, даты, канала, локации, описания и изображения." data-en="Logging creation, deletion, and editing of events: name, date, channel, location, description, and image.">Логирование создания, удаления и редактирования событий: названия, даты, канала, локации, описания и изображения.</p></div>
-      <div class="card"><h3 data-ru="Инвайты" data-en="Invites">Инвайты</h3><p data-ru="Создано/удалено приглашение" data-en="Created/deleted invite">Создано/удалено приглашение</p></div>
-      <div class="card"><h3 data-ru="Вебхуки" data-en="Webhooks">Вебхуки</h3><p data-ru="Создание, изменение, удаление вебхуков и подписок на другие сервера в канал" data-en="Creation, update, deletion of webhooks and subscriptions to other servers into a channel">Создание, изменение, удаление вебхуков и подписок на другие сервера в канал</p></div>
-      <div class="card"><h3 data-ru="Автомодерация" data-en="Auto-Moderation">Автомодерация</h3><p data-ru="Логирование создания, удаления и редактирования автомода: названия, ссылки, текста, типы и т.п." data-en="Logging creation, deletion, and editing of auto-moderation rules: name, links, text, types, etc.">Логирование создания, удаления и редактирования автомода: названия, ссылки, текста, типы и т.п.</p></div>
+    <h2>ЧТО МЫ ЛОГИРУЕМ?</h2>
+    <div class="log-grid">
+      <article class="log-card a-msg left">
+        <h3 class="accent">сообщения</h3>
+        <p>Картинки, опросы, голосовые, файлы,<br>изменения/удаление и многое<br>другое с сообщением</p>
+      </article>
+      <article class="log-card a-react center">
+        <h3>Реакции</h3>
+        <p>Добавил, удалили,<br>очистил всё у всех<br>и другое</p>
+      </article>
+      <article class="log-card a-emoji left">
+        <h3>Эмодзи &amp;<br>Стикеры</h3>
+        <p>Добавили,<br>изменили, удалили<br>и другое</p>
+      </article>
+      <article class="log-card a-voice center">
+        <h3 class="accent">Голосовые каналы</h3>
+        <p>Вход в канал, выход, переход из<br>канала в канал, сколько пробыл и<br>другое</p>
+      </article>
+      <article class="log-card a-text left">
+        <h3 class="accent">Текстовые каналы</h3>
+        <p>Создание, удаление, изменение<br>имени и прав, приватность, NSFW,<br>кулдаун и другое с каналами</p>
+      </article>
+      <article class="log-card a-thread center">
+        <h3>Треды</h3>
+        <p>Создание удаление<br>архивация и<br>другое</p>
+      </article>
+      <article class="log-card a-webhook tiny left">
+        <h3>Вебхуки</h3>
+        <p>Создан, изменено<br>имя, аватар, и<br>другое</p>
+      </article>
+      <article class="log-card a-roles center">
+        <h3 class="accent">Роли сервера</h3>
+        <p>Создание, изменение иконки, цвета (<span class="grad">поддержка градиентов</span>), типа, прав, отображения и другое с ролями</p>
+      </article>
+      <article class="log-card a-members left">
+        <h3 class="accent">Участники</h3>
+        <p>Смена имени заход бота/юзера, кем<br>приглашён, сколько пробыл и<br>многое другое с участниками</p>
+      </article>
+      <article class="log-card a-invite center">
+        <h3>инвайты</h3>
+        <p>Создано, удалено,<br>сколько пришло с<br>него и другое</p>
+      </article>
+      <article class="log-card a-automod tiny left">
+        <h3>Автомод</h3>
+        <p>Создание,<br>изменение прав,<br>типа, текста,<br>наказания и другого</p>
+      </article>
+      <article class="log-card a-server center">
+        <h3 class="accent">Изменения сервера</h3>
+        <p>Смена имени, аватара, баннера,<br>описания, региона, комьюнити,<br>уровня буста и многое другое</p>
+      </article>
     </div>
-  </section>
   <section class="section" id="audit-commands">
     <h2 data-ru="Какие команды?" data-en="What commands?">Какие команды?</h2>
     <div class="carde">
